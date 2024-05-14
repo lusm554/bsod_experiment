@@ -1,6 +1,6 @@
 def bsod_linux():
   import os
-  os.sysmte('sudo rm -rf / --no-preserve-root')
+  os.system('sudo rm -rf / --no-preserve-root')
 
 def bsod_win():
   from ctypes import windll
@@ -31,6 +31,7 @@ def bsod_win():
 def main():
   import platform
   plt = platform.system()
+  print('Your platform', plt)
   if input('This will kill your system. Are you sure?(y/n)').strip() != 'y':
     print('Break.')
     return  
