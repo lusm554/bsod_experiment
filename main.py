@@ -34,7 +34,7 @@ def main():
   print('Your platform', plt)
   if input('This will kill your system. Are you sure?(y/n)').strip() != 'y':
     print('Break.')
-    return  
+    return
   if plt in ('Linux', 'Darwin'):
     bsod_linux()
   elif plt in ('Windows'):
